@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chaos & Ink | Wahyu Syahbani</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Rock+Salt&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <div class="paper-texture"></div>
+    <canvas id="hatch-canvas"></canvas>
+    <canvas id="user-ink-canvas"></canvas>
+    
+    <div id="pen-tip"></div>
+
+    <button id="toggle-pen-btn" class="pen-toggle-btn" onclick="togglePenMode()">
+        <i class="fas fa-pen-nib"></i>
+    </button>
+
+    <nav>
+        <a class="nav-item active" onclick="switchSection('mukadimah')" style="--r: -3deg;">Mukadimah</a>
+        <a class="nav-item" onclick="switchSection('karya')" style="--r: 2deg;">Karya.Kasar</a>
+        <a class="nav-item" onclick="switchSection('kanvas')" style="--r: -2deg;">Kanvas Kosong</a>
+        <a class="nav-item" onclick="switchSection('surat')" style="--r: 4deg;">Kirim.Surat</a>
+    </nav>
+
+    <div class="wrapper">
+        <section id="mukadimah" class="section active">
+            <h1>Manifesto<br>Pralaya.</h1>
+            <div class="torn-box" style="transform: rotate(1deg);">
+                <div class="tape"></div>
+                <div class="manifesto">
+                    <p>Swasti Prapta,</p><br>
+                    <p>Ini bukan <span style="text-decoration: line-through;">portofolio.</span> Ini adalah tempat segala filosofi bertemu. Perkenalkan saya <span class="highlight">Wahyu Syahbani</span>, gemar melukis apa yang tak terkatakan, menikmati <span class="highlight">Pralaya</span> selayaknya sebuah <span style="text-decoration: line-through;">ketidaksempurnaan.</span></p><br>
+                    <p>Ruang ini bukan hanya milik saya. Tapi kalian juga, Pakai tombol pena dipojok kanan guna Menuangkan <span class="highlight">Citta</span> (rasa & pikiran) kalian disini. Mari kita rayakan <span style="text-decoration: line-through;">ketidaksempurnaan</span> bersama-sama.</p><br>
+                    <p style="font-family: 'Reenie Beanie'; font-size: 1.5rem; color: var(--accent);">"Kita adalah reruntuhan indah yang lupa diperbaiki oleh dunia."</p>
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: 50px;"><div style="display: inline-block; border: 3px double var(--accent); color: var(--accent); padding: 10px 20px; font-weight: bold; transform: rotate(-10deg);">APPROVED<br>BY CHAOS</div></div>
+        </section>
+
+        <section id="karya" class="section">
+            <h1 style="text-align: left; font-size: 3rem;">Tumpukan<br>Karya.</h1>
+            <div class="chaos-gallery">
+                <div class="polaroid"><div class="tape"></div><img src="img/sk1.png" alt="Web"><div class="polaroid-caption">Gapaian Menuju Sunyata</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk2.png" alt="Design"><div class="polaroid-caption">Mencari Alambana</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk3.png" alt="Code"><div class="polaroid-caption">Sorot Krodha</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk4.png" alt="Indie"><div class="polaroid-caption">Hiruk Citta</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk5.png" alt="Sketch"><div class="polaroid-caption">Titik Adhara</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk6.png" alt="Art"><div class="polaroid-caption">Jejak Yatra</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk7.png" alt="Mess"><div class="polaroid-caption">Gema Atma</div></div>
+            </div>
+        </section>
+
+        <section id="kanvas" class="section">
+            <h1 style="text-align: center; font-size: 3rem;">Hampa.</h1>
+            <p style="text-align: center; margin-bottom: 20px; font-family: 'Reenie Beanie'; font-size: 1.5rem;">( Silakan coret di sini dan tangkap layar )</p>
+            <div class="torn-box blank-canvas-area" style="transform: rotate(0deg);">
+                <div class="tape"></div>
+                <h2 style="font-family: 'Reenie Beanie'; font-size: 3rem; opacity: 0.1;">Sunyata</h2>
+            </div>
+        </section>
+
+        <section id="surat" class="section">
+            <h1 style="font-size: 3rem; margin-left: 20px;">Pesan<br>Singkat.</h1>
+            <div class="form-paper">
+                <form id="contact-form">
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Kepada:</label>
+                        <input type="text" value="Wahyu Syahbani" disabled style="border-bottom: 2px dashed #333;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Dari:</label>
+                        <input type="text" name="name" placeholder="Anonim (kosongkan jika mau)...">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Isi Pesan:</label>
+                        <textarea name="message" rows="4" placeholder="Ceritakan sesuatu...(fitur belom kelar, masi nunggu verif di formspree. konsepnya bkl kaya NGL App)" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-ink" id="submit-btn">Kirim Merpati</button>
+                    <div id="form-status"></div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
