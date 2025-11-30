@@ -178,12 +178,13 @@ window.addEventListener('touchstart', handleStart, {passive: false});
 window.addEventListener('touchmove', handleMove, {passive: false});
 window.addEventListener('touchend', handleEnd);
 
-resize();
-
-// --- 7. FIX: CEGAH MENU KLIK KANAN/LONG PRESS SAAT GAMBAR ---
 window.addEventListener("contextmenu", function(e) {
     if (isDrawingMode) {
         e.preventDefault(); // Matikan menu klik kanan jika mode pena aktif
         return false;
     }
+
 });
+
+resize();
+
