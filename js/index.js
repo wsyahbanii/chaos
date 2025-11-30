@@ -32,14 +32,17 @@ function togglePenMode() {
     isDrawingMode = !isDrawingMode;
     const btn = document.getElementById('toggle-pen-btn');
     const icon = btn.querySelector('i');
+    
     if (isDrawingMode) {
         document.body.classList.add('drawing-mode');
         btn.classList.add('active');
-        icon.classList.remove('fa-pen-nib'); icon.classList.add('fa-hand-pointer'); 
+        icon.classList.remove('fa-pen-nib'); 
+        icon.classList.add('fa-hand-pointer'); 
     } else {
         document.body.classList.remove('drawing-mode');
         btn.classList.remove('active');
-        icon.classList.remove('fa-hand-pointer'); icon.classList.add('fa-pen-nib');
+        icon.classList.remove('fa-hand-pointer'); 
+        icon.classList.add('fa-pen-nib');
     }
 }
 
@@ -52,23 +55,13 @@ let w, h;
 
 function resize() {
     const dpr = window.devicePixelRatio || 1;
-    
     w = window.innerWidth;
     h = window.innerHeight;
-
-    bgCanvas.width = w * dpr;
-    bgCanvas.height = h * dpr;
-    inkCanvas.width = w * dpr;
-    inkCanvas.height = h * dpr;
-
-    bgCanvas.style.width = w + 'px';
-    bgCanvas.style.height = h + 'px';
-    inkCanvas.style.width = w + 'px';
-    inkCanvas.style.height = h + 'px';
-
-    bgCtx.scale(dpr, dpr);
-    inkCtx.scale(dpr, dpr);
-
+    bgCanvas.width = w * dpr; bgCanvas.height = h * dpr;
+    inkCanvas.width = w * dpr; inkCanvas.height = h * dpr;
+    bgCanvas.style.width = w + 'px'; bgCanvas.style.height = h + 'px';
+    inkCanvas.style.width = w + 'px'; inkCanvas.style.height = h + 'px';
+    bgCtx.scale(dpr, dpr); inkCtx.scale(dpr, dpr);
     drawHatching();
 }
 window.addEventListener('resize', resize);
@@ -84,28 +77,29 @@ function drawHatching() {
     }
 }
 
+// --- 6. DRAWING LOGIC (ZERO OFFSET & MOBILE FIX) ---
 let lastX = 0, lastY = 0, isDown = false;
 
 function getPos(e) {
     const rect = inkCanvas.getBoundingClientRect();
     let clientX, clientY;
-
     if(e.touches && e.touches.length > 0) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
+        clientX = e.touches[0].clientX; clientY = e.touches[0].clientY;
     } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
+        clientX = e.clientX; clientY = e.clientY;
     }
-
-    return {
-        x: clientX - rect.left,
-        y: clientY - rect.top
-    };
+    return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
 function handleStart(e) {
+    if (e.target.closest('#toggle-pen-btn')) {
+        return; 
+    }
+
+    if (e.target.closest('nav')) return;
+
     if(!isDrawingMode) return;
+    
     if(e.type === 'touchstart') e.preventDefault(); 
     
     const pos = getPos(e);
@@ -113,12 +107,17 @@ function handleStart(e) {
     lastY = pos.y;
     isDown = true;
     
-    penTip.style.left = (e.touches ? e.touches[0].clientX : e.clientX) + 'px';
-    penTip.style.top = (e.touches ? e.touches[0].clientY : e.clientY) + 'px';
+    let clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    let clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    penTip.style.left = clientX + 'px';
+    penTip.style.top = clientY + 'px';
 }
 
 function handleMove(e) {
     if(!isDrawingMode) return;
+    
+    if (e.target.closest('#toggle-pen-btn')) return;
+
     if(e.type === 'touchmove') e.preventDefault();
 
     const pos = getPos(e);
@@ -133,7 +132,6 @@ function handleMove(e) {
     inkCtx.beginPath();
     inkCtx.moveTo(lastX, lastY);
     inkCtx.lineTo(pos.x, pos.y);
-    
     inkCtx.lineWidth = Math.random() * 2 + 1;
     inkCtx.strokeStyle = '#0a0a0a';
     inkCtx.lineCap = 'round';
@@ -146,8 +144,7 @@ function handleMove(e) {
         inkCtx.fill();
     }
 
-    lastX = pos.x; 
-    lastY = pos.y;
+    lastX = pos.x; lastY = pos.y;
 }
 
 function handleEnd() { isDown = false; }
@@ -165,9 +162,6 @@ window.addEventListener("contextmenu", function(e) {
         e.preventDefault();
         return false;
     }
-
 });
 
 resize();
-
-
