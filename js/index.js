@@ -1,8 +1,5 @@
-// --- 1. SETTING FORMSPREE ---
-// Ganti kode_unik_kamu dengan ID dari Formspree (misal: xnqoykxr)
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/kode_unik_kamu"; 
 
-// --- 2. LOGIC KIRIM SURAT ---
 const form = document.getElementById("contact-form");
 async function handleSubmit(event) {
     event.preventDefault();
@@ -19,7 +16,6 @@ async function handleSubmit(event) {
 }
 form.addEventListener("submit", handleSubmit);
 
-// --- 3. SPA NAVIGATION ---
 function switchSection(sectionId) {
     document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -31,7 +27,6 @@ function switchSection(sectionId) {
     if(sectionId === 'surat') navs[3].classList.add('active');
 }
 
-// --- 4. PEN TOGGLE ---
 let isDrawingMode = false;
 function togglePenMode() {
     isDrawingMode = !isDrawingMode;
@@ -48,7 +43,6 @@ function togglePenMode() {
     }
 }
 
-// --- 5. CANVAS ENGINE (HIGH PRECISION DPI) ---
 const bgCanvas = document.getElementById('hatch-canvas');
 const bgCtx = bgCanvas.getContext('2d');
 const inkCanvas = document.getElementById('user-ink-canvas');
@@ -57,25 +51,21 @@ const penTip = document.getElementById('pen-tip');
 let w, h;
 
 function resize() {
-    // KALIBRASI DPI: Kunci untuk presisi di Mobile Retina/High-Res
     const dpr = window.devicePixelRatio || 1;
     
     w = window.innerWidth;
     h = window.innerHeight;
 
-    // Set resolusi internal canvas dikalikan DPR (agar tajam)
     bgCanvas.width = w * dpr;
     bgCanvas.height = h * dpr;
     inkCanvas.width = w * dpr;
     inkCanvas.height = h * dpr;
 
-    // Set ukuran tampilan CSS (agar pas di layar)
     bgCanvas.style.width = w + 'px';
     bgCanvas.style.height = h + 'px';
     inkCanvas.style.width = w + 'px';
     inkCanvas.style.height = h + 'px';
 
-    // Scale context agar kita bisa menggambar menggunakan koordinat CSS biasa
     bgCtx.scale(dpr, dpr);
     inkCtx.scale(dpr, dpr);
 
@@ -94,10 +84,8 @@ function drawHatching() {
     }
 }
 
-// --- 6. DRAWING LOGIC (ZERO OFFSET) ---
 let lastX = 0, lastY = 0, isDown = false;
 
-// Fungsi Helper: Dapatkan koordinat presisi relatif terhadap canvas
 function getPos(e) {
     const rect = inkCanvas.getBoundingClientRect();
     let clientX, clientY;
@@ -110,7 +98,6 @@ function getPos(e) {
         clientY = e.clientY;
     }
 
-    // Hitung offset akurat (penting jika ada margin/padding browser)
     return {
         x: clientX - rect.left,
         y: clientY - rect.top
@@ -126,7 +113,6 @@ function handleStart(e) {
     lastY = pos.y;
     isDown = true;
     
-    // Pindahkan titik hitam langsung
     penTip.style.left = (e.touches ? e.touches[0].clientX : e.clientX) + 'px';
     penTip.style.top = (e.touches ? e.touches[0].clientY : e.clientY) + 'px';
 }
@@ -137,7 +123,6 @@ function handleMove(e) {
 
     const pos = getPos(e);
     
-    // 1. UPDATE TITIK HITAM
     let clientX = e.touches ? e.touches[0].clientX : e.clientX;
     let clientY = e.touches ? e.touches[0].clientY : e.clientY;
     penTip.style.left = clientX + 'px';
@@ -145,7 +130,6 @@ function handleMove(e) {
 
     if(!isDown) return;
 
-    // 2. GAMBAR TINTA (Direct Line untuk presisi maksimal)
     inkCtx.beginPath();
     inkCtx.moveTo(lastX, lastY);
     inkCtx.lineTo(pos.x, pos.y);
@@ -156,7 +140,6 @@ function handleMove(e) {
     inkCtx.lineJoin = 'round';
     inkCtx.stroke();
 
-    // Efek Splatter
     if(Math.random() > 0.99) {
         inkCtx.beginPath();
         inkCtx.arc(pos.x, pos.y, Math.random()*3, 0, Math.PI*2);
@@ -173,18 +156,18 @@ window.addEventListener('mousedown', handleStart);
 window.addEventListener('mousemove', handleMove);
 window.addEventListener('mouseup', handleEnd);
 
-// Event Mobile (Passive false wajib agar preventDefault jalan)
 window.addEventListener('touchstart', handleStart, {passive: false});
 window.addEventListener('touchmove', handleMove, {passive: false});
 window.addEventListener('touchend', handleEnd);
 
 window.addEventListener("contextmenu", function(e) {
     if (isDrawingMode) {
-        e.preventDefault(); // Matikan menu klik kanan jika mode pena aktif
+        e.preventDefault();
         return false;
     }
 
 });
 
 resize();
+
 
