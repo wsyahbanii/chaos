@@ -1,4 +1,4 @@
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/kode_unik_kamu"; 
+const FORMSPREE_ENDPOINT = "https://formsubmit.co/ajax/wahyuusyahbanii@gmail.com"; 
 
 const form = document.getElementById("contact-form");
 async function handleSubmit(event) {
@@ -165,3 +165,4 @@ window.addEventListener("contextmenu", function(e) {
 });
 
 resize();
+
