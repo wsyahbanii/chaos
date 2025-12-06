@@ -7,9 +7,12 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Rock+Salt&family=Special+Elite&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <link rel="stylesheet" href="css/index.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -71,22 +74,20 @@
         <section id="surat" class="section">
             <h1 style="font-size: 3rem; margin-left: 20px;">Patra Duka</h1>
             <div class="form-paper">
-                <form action="https://formsubmit.co/wahyuusyahbanii@gmail.com" method="POST">
+                <form id="contact-form">
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Teruntuk:</label>
                         <input type="text" value="Pembaca" disabled style="border-bottom: 2px dashed #333;">
                     </div>
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Dari:</label>
-                        <input type="text" name="name" placeholder="Nama..(Kosongkan jika sungkan..)">
+                        <input type="text" name="name" placeholder="Gunakan nama lain jika sungkan.." required>
                     </div>
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Isi Pesan:</label>
                         <textarea name="message" rows="4" placeholder="Ceritakan sesuatu..." required></textarea>
                     </div>
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_subject" value="Surat Baru dari Graha Niskala">
-                    <input type="hidden" name="_template" value="table">
+                    
                     <button type="submit" class="submit-ink" id="submit-btn">Kirim Merpati</button>
                     <div id="form-status"></div>
                 </form>
@@ -96,13 +97,4 @@
 
     <script src="js/index.js"></script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
