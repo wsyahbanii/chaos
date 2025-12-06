@@ -1,32 +1,64 @@
-const FORMSPREE_ENDPOINT = "https://formsubmit.co/ajax/wahyuusyahbanii@gmail.com"; 
+// --- 0. INISIALISASI EMAILJS ---
+(function() {
+    // Public Key Anda
+    emailjs.init("vEkfJBukKK7hxdRW0"); 
+})();
 
+// --- 1. KONFIGURASI FORM SUBMIT (EMAILJS) ---
 const form = document.getElementById("contact-form");
-async function handleSubmit(event) {
-    event.preventDefault();
-    const status = document.getElementById("form-status");
-    const btn = document.getElementById("submit-btn");
-    const data = new FormData(event.target);
-    if(FORMSPREE_ENDPOINT.includes("kode_unik_kamu")){ alert("Wahyu belum memasang alamat Formspree!"); return; }
-    btn.disabled = true; btn.innerText = "Menerbangkan...";
-    fetch(FORMSPREE_ENDPOINT, { method: "POST", body: data, headers: { 'Accept': 'application/json' } })
-    .then(response => {
-        if (response.ok) { status.innerHTML = "Merpati berhasil sampai!"; status.style.color = "#333"; form.reset(); } 
-        else { response.json().then(data => { status.innerHTML = "Merpati tersesat."; }) }
-    }).catch(error => { status.innerHTML = "Ada badai, gagal terbang."; }).finally(() => { btn.disabled = false; btn.innerText = "Kirim Merpati"; });
-}
-form.addEventListener("submit", handleSubmit);
+const statusTxt = document.getElementById("form-status");
+const submitBtn = document.getElementById("submit-btn");
 
+if (form) {
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Mencegah reload halaman
+
+        // UI Loading
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Menerbangkan...";
+        statusTxt.innerHTML = "";
+
+        // Service & Template ID
+        const serviceID = 'service_llora7l'; 
+        const templateID = 'template_bu4yg2e';
+
+        // Kirim Form via EmailJS
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                // Sukses
+                submitBtn.innerText = "Kirim Merpati";
+                statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
+                statusTxt.style.color = "#333";
+                form.reset();
+            }, (err) => {
+                // Gagal
+                submitBtn.innerText = "Kirim Merpati";
+                statusTxt.innerHTML = "Gagal mengirim: " + JSON.stringify(err);
+                statusTxt.style.color = "red";
+                console.error('FAILED...', err);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+            });
+    });
+}
+
+// --- 2. NAVIGASI SPA ---
 function switchSection(sectionId) {
     document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-    document.getElementById(sectionId).classList.add('active');
+    
+    const target = document.getElementById(sectionId);
+    if(target) target.classList.add('active');
+    
     const navs = document.querySelectorAll('.nav-item');
-    if(sectionId === 'mukadimah') navs[0].classList.add('active');
-    if(sectionId === 'karya') navs[1].classList.add('active');
-    if(sectionId === 'kanvas') navs[2].classList.add('active');
-    if(sectionId === 'surat') navs[3].classList.add('active');
+    if(sectionId === 'mukadimah' && navs[0]) navs[0].classList.add('active');
+    if(sectionId === 'karya' && navs[1]) navs[1].classList.add('active');
+    if(sectionId === 'kanvas' && navs[2]) navs[2].classList.add('active');
+    if(sectionId === 'surat' && navs[3]) navs[3].classList.add('active');
 }
 
+// --- 3. MODE PENA & TOGGLE ---
 let isDrawingMode = false;
 function togglePenMode() {
     isDrawingMode = !isDrawingMode;
@@ -46,27 +78,33 @@ function togglePenMode() {
     }
 }
 
+// --- 4. CANVAS & HATCHING BACKGROUND ---
 const bgCanvas = document.getElementById('hatch-canvas');
-const bgCtx = bgCanvas.getContext('2d');
+const bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
 const inkCanvas = document.getElementById('user-ink-canvas');
-const inkCtx = inkCanvas.getContext('2d');
+const inkCtx = inkCanvas ? inkCanvas.getContext('2d') : null;
 const penTip = document.getElementById('pen-tip');
 let w, h;
 
 function resize() {
+    if (!bgCanvas || !inkCanvas) return;
     const dpr = window.devicePixelRatio || 1;
     w = window.innerWidth;
     h = window.innerHeight;
+    
     bgCanvas.width = w * dpr; bgCanvas.height = h * dpr;
     inkCanvas.width = w * dpr; inkCanvas.height = h * dpr;
+    
     bgCanvas.style.width = w + 'px'; bgCanvas.style.height = h + 'px';
     inkCanvas.style.width = w + 'px'; inkCanvas.style.height = h + 'px';
+    
     bgCtx.scale(dpr, dpr); inkCtx.scale(dpr, dpr);
     drawHatching();
 }
 window.addEventListener('resize', resize);
 
 function drawHatching() {
+    if (!bgCtx) return;
     bgCtx.clearRect(0,0,w,h);
     bgCtx.strokeStyle = 'rgba(0,0,0,0.05)'; bgCtx.lineWidth = 1;
     for(let i=0; i<300; i++) {
@@ -77,7 +115,7 @@ function drawHatching() {
     }
 }
 
-// --- 6. DRAWING LOGIC (ZERO OFFSET & MOBILE FIX) ---
+// --- 5. LOGIKA MENGGAMBAR (Mobile & Desktop) ---
 let lastX = 0, lastY = 0, isDown = false;
 
 function getPos(e) {
@@ -92,13 +130,9 @@ function getPos(e) {
 }
 
 function handleStart(e) {
-    if (e.target.closest('#toggle-pen-btn')) {
-        return; 
-    }
-
+    if (e.target.closest('#toggle-pen-btn')) return;
     if (e.target.closest('nav')) return;
-
-    if(!isDrawingMode) return;
+    if (!isDrawingMode) return;
     
     if(e.type === 'touchstart') e.preventDefault(); 
     
@@ -109,39 +143,43 @@ function handleStart(e) {
     
     let clientX = e.touches ? e.touches[0].clientX : e.clientX;
     let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    penTip.style.left = clientX + 'px';
-    penTip.style.top = clientY + 'px';
+    if(penTip) {
+        penTip.style.left = clientX + 'px';
+        penTip.style.top = clientY + 'px';
+    }
 }
 
 function handleMove(e) {
-    if(!isDrawingMode) return;
-    
+    if (!isDrawingMode) return;
     if (e.target.closest('#toggle-pen-btn')) return;
-
     if(e.type === 'touchmove') e.preventDefault();
 
     const pos = getPos(e);
     
     let clientX = e.touches ? e.touches[0].clientX : e.clientX;
     let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    penTip.style.left = clientX + 'px';
-    penTip.style.top = clientY + 'px';
+    if(penTip) {
+        penTip.style.left = clientX + 'px';
+        penTip.style.top = clientY + 'px';
+    }
 
     if(!isDown) return;
 
-    inkCtx.beginPath();
-    inkCtx.moveTo(lastX, lastY);
-    inkCtx.lineTo(pos.x, pos.y);
-    inkCtx.lineWidth = Math.random() * 2 + 1;
-    inkCtx.strokeStyle = '#0a0a0a';
-    inkCtx.lineCap = 'round';
-    inkCtx.lineJoin = 'round';
-    inkCtx.stroke();
-
-    if(Math.random() > 0.99) {
+    if(inkCtx) {
         inkCtx.beginPath();
-        inkCtx.arc(pos.x, pos.y, Math.random()*3, 0, Math.PI*2);
-        inkCtx.fill();
+        inkCtx.moveTo(lastX, lastY);
+        inkCtx.lineTo(pos.x, pos.y);
+        inkCtx.lineWidth = Math.random() * 2 + 1;
+        inkCtx.strokeStyle = '#0a0a0a';
+        inkCtx.lineCap = 'round';
+        inkCtx.lineJoin = 'round';
+        inkCtx.stroke();
+
+        if(Math.random() > 0.99) {
+            inkCtx.beginPath();
+            inkCtx.arc(pos.x, pos.y, Math.random()*3, 0, Math.PI*2);
+            inkCtx.fill();
+        }
     }
 
     lastX = pos.x; lastY = pos.y;
@@ -165,4 +203,3 @@ window.addEventListener("contextmenu", function(e) {
 });
 
 resize();
-
