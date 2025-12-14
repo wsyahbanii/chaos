@@ -83,5 +83,142 @@ button.submit-ink:disabled { opacity: 0.5; cursor: not-allowed; }
 #form-status { font-family: 'Reenie Beanie'; font-size: 1.5rem; text-align: center; margin-top: 15px; min-height: 30px; }
 
 .blank-canvas-area { min-height: 70vh; background: #fff; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center; flex-direction: column; border: 1px solid #ddd; }
+/* TOMBOL RAHASIA */
+#secret-trigger {
+    font-size: 1.5rem;
+    font-family: 'Reenie Beanie';
+    cursor: pointer;
+    opacity: 0.2; /* Hampir transparan/tersembunyi */
+    transition: 0.5s;
+    vertical-align: middle;
+}
 
+#secret-trigger:hover {
+    opacity: 1; /* Muncul saat di-hover */
+    color: var(--accent);
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 20000; /* Di atas segalanya */
+    display: none; /* Default sembunyi */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.open {
+    display: flex;
+    opacity: 1;
+}
+
+/* KERTAS CERITA */
+.modal-paper {
+    background: #fdfbf7;
+    width: 90%;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 40px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    position: relative;
+    transform: rotate(1deg);
+    background-image: url("https://www.transparenttextures.com/patterns/cracked-concrete-wall.png");
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px; right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    font-family: 'Rock Salt';
+    color: #999;
+}
+.close-modal:hover { color: #000; }
+
+.story-content h2 {
+    font-family: 'Reenie Beanie';
+    font-size: 2.5rem;
+    border-bottom: 1px dashed #999;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.typewriter-text {
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-line; /* Agar enter terbaca */
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+/* NAVIGASI CERITA */
+.story-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    border-top: 2px double #ccc;
+    padding-top: 15px;
+}
+
+/* UPDATE CSS UNTUK CONTAINER TOMBOL */
+.secret-story-container {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -20px; /* Sedikit menaikkan posisi agar lebih dekat ke judul */
+}
+
+#secret-trigger {
+    font-size: 2rem; /* Ukuran font sedikit diperbesar agar lebih terlihat */
+    font-family: 'Reenie Beanie';
+    cursor: pointer;
+    opacity: 0.5; /* Tetap samar */
+    transition: 0.5s;
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 0px;
+    text-decoration: underline 2px ;
+}
+/* ... (CSS secret-trigger:hover dan lainnya tetap sama) ... */
+.story-nav button {
+    background: none;
+    border: none;
+    font-family: 'Rock Salt';
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.6;
+}
+.story-nav button:hover:not(:disabled) { opacity: 1; transform: scale(1.1); }
+.story-nav button:disabled { opacity: 0.2; cursor: default; }
+
+#story-indicator { font-family: 'Reenie Beanie'; font-size: 1.5rem; }
+/* GAYA UNTUK DROPDOWN PENCARIAN */
+#story-date-search {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--ink); /* Garis bawah seperti tulisan */
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+    color: var(--ink);
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+}
+
+#story-date-search option {
+    background: #fdfbf7; /* Warna kertas */
+    font-family: 'Special Elite', monospace;
+}
 @media (max-width: 768px) { h1 { font-size: 2.5rem; } .chaos-gallery { gap: 40px; } .polaroid { margin-top: 0 !important; margin-left: 0 !important; } nav { top: 20px; right: 20px; } }

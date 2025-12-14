@@ -15,7 +15,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
-
     <div class="paper-texture"></div>
     <canvas id="hatch-canvas"></canvas>
     <canvas id="user-ink-canvas"></canvas>
@@ -42,7 +41,7 @@
                     <p>Swasti Prapta,</p><br>
                     <p>Ini bukan <span style="text-decoration: line-through;">portofolio.</span> Ini adalah tempat segala filosofi bertemu. Perkenalkan saya <span class="highlight">Wahyu Syahbani</span>, gemar melukis apa yang tak terkatakan, menikmati <span class="highlight">Pralaya</span> selayaknya sebuah <span style="text-decoration: line-through;">ketidaksempurnaan.</span></p><br>
                     <p>Ruang ini bukan hanya milik saya. Tapi kalian juga, Pakai tombol pena dipojok kanan guna Menuangkan <span class="highlight">Citta</span> (rasa & pikiran) kalian disini. Mari kita rayakan <span style="text-decoration: line-through;">ketidaksempurnaan</span> bersama-sama.</p><br>
-                    <p style="font-family: 'Reenie Beanie'; font-size: 1.5rem; color: var(--accent);">"suicide season"</p>
+                    <p style="font-family: 'Reenie Beanie'; font-size: 1.5rem; color: var(--accent);">"suicide season."</p>
                 </div>
             </div>
             <div style="text-align: right; margin-top: 50px;"><div style="display: inline-block; border: 3px double var(--accent); color: var(--accent); padding: 10px 20px; font-weight: bold; transform: rotate(-10deg);">APPROVED<br>BY CHAOS</div></div>
@@ -60,7 +59,7 @@
                 <div class="polaroid"><div class="tape"></div><img src="img/sk7.png" alt="Mess"><div class="polaroid-caption">Gema Atma</div></div>
                 <div class="polaroid"><div class="tape"></div><img src="img/sk8.png" alt="Cry"><div class="polaroid-caption">Tamas Krandana</div></div>
                 <div class="polaroid"><div class="tape"></div><img src="img/sk9.jpg" alt="Cry"><div class="polaroid-caption">Atma Vilapa</div></div>
-                <div class="polaroid"><div class="tape"></div><img src="img/sk10.jpg" alt="Cry"><div class="polaroid-caption">Shakti Udaya</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk10.jpg" alt="Cry"><div class="polaroid-caption">Tamas Krandana</div></div>
             </div>
         </section>
 
@@ -75,6 +74,11 @@
 
         <section id="surat" class="section">
             <h1 style="font-size: 3rem; margin-left: 20px;">Patra Duka</h1>
+
+            <div class="secret-story-container">
+                <span id="secret-trigger" onclick="openStory()">see reply</span>
+            </div>
+
             <div class="form-paper">
                 <form id="contact-form">
                     <div style="margin-bottom: 20px;">
@@ -89,15 +93,36 @@
                         <label class="form-label">Isi Pesan:</label>
                         <textarea name="message" rows="4" placeholder="Ceritakan sesuatu..." required></textarea>
                     </div>
-                    
+            
                     <button type="submit" class="submit-ink" id="submit-btn">Kirim Merpati</button>
                     <div id="form-status"></div>
                 </form>
             </div>
         </section>
     </div>
+    <div id="story-modal" class="modal-overlay">
+        <div class="modal-paper">
+            <span class="close-modal" onclick="closeStory()">&times;</span>
+        
+            <div class="story-content">
+                <h2 id="story-title">Judul Cerita</h2>
+                <p id="story-date" style="font-family: 'Special Elite'; font-size: 0.8rem; color: #666; margin-bottom: 20px;"></p>
+                <div id="story-body" class="typewriter-text">
+                    </div>
+            </div>
+            <div class="story-search-wrapper" style="text-align: center; margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 10px;">
+                <label style="font-family: 'Reenie Beanie'; font-size: 1.2rem;">Lompat ke:</label>
+                <select id="story-date-search" onchange="jumpToStory(this.value)">
+                    </select>
+            </div>
+            <div class="story-nav">
+                <button onclick="prevStory()" id="btn-prev" disabled>← Lalu</button>
+                <span id="story-indicator">1/1</span>
+                <button onclick="nextStory()" id="btn-next">Kini →</button>
+            </div>
+        </div>
+    </div>
 
     <script src="js/index.js"></script>
 </body>
-
 </html>

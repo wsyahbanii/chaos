@@ -202,4 +202,127 @@ window.addEventListener("contextmenu", function(e) {
     }
 });
 
+// --- 6. FITUR CERITA TERSEMBUNYI (HIDDEN STORY) ---
+const myStories = [
+//    {
+//        title: "COGNITIVE DISSONANCE",
+//        date: "01:49 | 14 Desember 2025",
+//        content: "u know~\n udh tau endingny bakalan engga tpi kek.. ttp aj kea gmnaa gtu tea slh gasii? n tudey dia dh ngepost cwe\n\n gasalah ko. kdang emg logika udh tau endingnya bkl gmana, tpi hati emg suka batu n berharap ada plot twist. \nsakit sih liat doi udah post org lain, tpi anggep aj itu jawaban dri Tuhan biar kamu ga buang2 waktu lgi nungguin hal yang nggak pasti. its ur sign to let go completely. Semangat ya!"
+//    },
+];
+
+let currentStoryIndex = 0;
+const modal = document.getElementById('story-modal');
+const titleEl = document.getElementById('story-title');
+const dateEl = document.getElementById('story-date');
+const bodyEl = document.getElementById('story-body');
+const indicatorEl = document.getElementById('story-indicator');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+
+function openStory() {
+    if(!modal) return;
+    loadStory(currentStoryIndex);
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden'; // Stop scroll background
+}
+
+function closeStory() {
+    if(!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = 'auto'; // Resume scroll
+}
+
+function loadStory(index) {
+    if (index < 0 || index >= myStories.length) return;
+    
+    const story = myStories[index];
+    titleEl.innerText = story.title;
+    dateEl.innerText = story.date;
+    bodyEl.innerText = story.content;
+    
+    // Update Indikator Halaman
+    indicatorEl.innerText = (index + 1) + " / " + myStories.length;
+
+    // Atur tombol Next/Prev
+    btnPrev.disabled = (index === 0);
+    btnNext.disabled = (index === myStories.length - 1);
+}
+
+function nextStory() {
+    if (currentStoryIndex < myStories.length - 1) {
+        currentStoryIndex++;
+        loadStory(currentStoryIndex);
+    }
+}
+
+function prevStory() {
+    if (currentStoryIndex > 0) {
+        currentStoryIndex--;
+        loadStory(currentStoryIndex);
+    }
+}
+
+// --- UPDATE JAVASCRIPT FITUR CERITA ---
+
+// 1. Tambahkan variabel selector
+const dateSearchInput = document.getElementById('story-date-search');
+
+// 2. Modifikasi fungsi openStory untuk sekaligus mengisi daftar tanggal
+function openStory() {
+    if(!modal) return;
+    
+    populateDateSearch(); // <--- Panggil fungsi baru ini
+    
+    loadStory(currentStoryIndex);
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+// 3. Fungsi Baru: Mengisi Dropdown Tanggal
+function populateDateSearch() {
+    // Kosongkan dulu isinya
+    dateSearchInput.innerHTML = "";
+    
+    // Tambahkan opsi default
+    let defaultOpt = document.createElement('option');
+    defaultOpt.text = "-- Pilih Tanggal --";
+    defaultOpt.disabled = true;
+    defaultOpt.selected = true;
+    dateSearchInput.add(defaultOpt);
+
+    // Loop array myStories dan buat opsi untuk setiap tanggal
+    myStories.forEach((story, index) => {
+        let opt = document.createElement('option');
+        opt.value = index; // Nilai opsinya adalah index array (0, 1, 2...)
+        opt.text = story.date; // Teks yang muncul adalah Tanggalnya
+        dateSearchInput.add(opt);
+    });
+}
+
+// 4. Fungsi Baru: Lompat ke Cerita saat tanggal dipilih
+function jumpToStory(indexVal) {
+    currentStoryIndex = parseInt(indexVal); // Ubah string ke number
+    loadStory(currentStoryIndex);
+}
+
+// 5. Update fungsi loadStory agar dropdown juga ikut berubah jika kita klik Next/Prev
+// (Tambahkan baris ini di dalam fungsi loadStory yang sudah ada)
+function loadStory(index) {
+    if (index < 0 || index >= myStories.length) return;
+    
+    const story = myStories[index];
+    titleEl.innerText = story.title;
+    dateEl.innerText = story.date;
+    bodyEl.innerText = story.content;
+    indicatorEl.innerText = (index + 1) + " / " + myStories.length;
+    
+    btnPrev.disabled = (index === 0);
+    btnNext.disabled = (index === myStories.length - 1);
+
+    // --- TAMBAHAN BARU: Sinkronisasi Dropdown ---
+    // Agar jika kita klik Next, dropdownnya ikut berubah sesuai tanggal cerita sekarang
+    dateSearchInput.value = index; 
+}
+
 resize();
