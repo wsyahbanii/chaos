@@ -1,4 +1,4 @@
-# ✒️ Chaos & Ink: Jurnal Hampa
+# ✒️ Graha Niskala
 
 <img width="1881" height="852" alt="Screenshot 2025-12-01 035645" src="https://github.com/user-attachments/assets/fc0c2612-e0b3-4461-b5fa-9d750d57c8ab" />
 > *"Kita adalah reruntuhan indah yang lupa diperbaiki oleh dunia."*
