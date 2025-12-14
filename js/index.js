@@ -204,11 +204,11 @@ window.addEventListener("contextmenu", function(e) {
 
 // --- 6. FITUR CERITA TERSEMBUNYI (HIDDEN STORY) ---
 const myStories = [
-//    {
-//        title: "COGNITIVE DISSONANCE",
-//        date: "01:49 | 14 Desember 2025",
-//        content: "u know~\n udh tau endingny bakalan engga tpi kek.. ttp aj kea gmnaa gtu tea slh gasii? n tudey dia dh ngepost cwe\n\n gasalah ko. kdang emg logika udh tau endingnya bkl gmana, tpi hati emg suka batu n berharap ada plot twist. \nsakit sih liat doi udah post org lain, tpi anggep aj itu jawaban dri Tuhan biar kamu ga buang2 waktu lgi nungguin hal yang nggak pasti. its ur sign to let go completely. Semangat ya!"
-//    },
+    {
+        title: "Example",
+        date: "11:55 | 14 Desember 2025",
+        content: "(disini nama samaran kalian)\n (disini bakal isi cerita kalian note: buat yg mungkin butuh di reply tolong kasih note di akhir cerita apapun contoh (note:tolong reply). dan yang mungkin gabutuh untuk di reply bisa cerita seperti biasa)\n\n (dan disini reply dari gua buat cerita kalian)"
+    },
 ];
 
 let currentStoryIndex = 0;
@@ -324,5 +324,6 @@ function loadStory(index) {
     // Agar jika kita klik Next, dropdownnya ikut berubah sesuai tanggal cerita sekarang
     dateSearchInput.value = index; 
 }
+
 
 resize();
