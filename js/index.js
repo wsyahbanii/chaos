@@ -205,10 +205,10 @@ window.addEventListener("contextmenu", function(e) {
 // --- 6. FITUR CERITA TERSEMBUNYI (HIDDEN STORY) ---
 const myStories = [
     {
-        title: "Welcome",
-        date: "22:25 | 16 Desember 2025",
-        content: "Halo! Di sini, kalian bisa menemukan catatan-catatan kecil yang saya tulis. Silakan gunakan tombol navigasi di bawah untuk menjelajahi cerita-cerita lainnya. Semoga kamu menikmatinya! \n\n DAN TEMPAT INI BAKAL JADI TEMPAT GUA NGEBACOT HAHAHA maaf \n\n - wahyu syahbani"
-    },  
+        title: "Catharsis",
+        date: "22:37 | 16 Desember 2025",
+        content: "Ada kalanya, ketenangan justru ditemukan dalam gema distorsi gitar yang memekakkan telinga. Saat dunia luar terlalu bising dengan basa-basi yang melelahkan, menunduk menjadi satu-satunya pelarian. Membiarkan tinta hitam menari liar di atas kertas putih, menciptakan sebuah semesta kecil di mana tidak ada satu pun hal yang perlu dijelaskan kepada siapa saja."
+    },
 ];
 
 let currentStoryIndex = 0;
@@ -327,5 +327,6 @@ function loadStory(index) {
 
 
 resize();
+
 
 
