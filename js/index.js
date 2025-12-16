@@ -206,7 +206,7 @@ window.addEventListener("contextmenu", function(e) {
 const myStories = [
     {
         title: "Welcome",
-        date: "11:55 | 14 Desember 2025",
+        date: "22:25 | 16 Desember 2025",
         content: "Halo! Di sini, kalian bisa menemukan catatan-catatan kecil yang saya tulis. Silakan gunakan tombol navigasi di bawah untuk menjelajahi cerita-cerita lainnya. Semoga kamu menikmatinya! \n\n DAN TEMPAT INI BAKAL JADI TEMPAT GUA NGEBACOT HAHAHA maaf \n\n - wahyu syahbani"
     },  
 ];
@@ -327,4 +327,5 @@ function loadStory(index) {
 
 
 resize();
+
 
