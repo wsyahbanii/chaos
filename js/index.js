@@ -205,10 +205,10 @@ window.addEventListener("contextmenu", function(e) {
 // --- 6. FITUR CERITA TERSEMBUNYI (HIDDEN STORY) ---
 const myStories = [
     {
-        title: "Example",
+        title: "Welcome",
         date: "11:55 | 14 Desember 2025",
-        content: "(disini nama samaran kalian)\n (disini bakal isi cerita kalian note: buat yg mungkin butuh di reply tolong kasih note di akhir cerita apapun contoh (note:tolong reply). dan yang mungkin gabutuh untuk di reply bisa cerita seperti biasa)\n\n (dan disini reply dari gua buat cerita kalian)"
-    },
+        content: "Halo! Di sini, kalian bisa menemukan catatan-catatan kecil yang saya tulis. Silakan gunakan tombol navigasi di bawah untuk menjelajahi cerita-cerita lainnya. Semoga kamu menikmatinya! \n\n DAN TEMPAT INI BAKAL JADI TEMPAT GUA NGEBACOT HAHAHA maaf \n\n - wahyu syahbani"
+    },  
 ];
 
 let currentStoryIndex = 0;
@@ -327,3 +327,4 @@ function loadStory(index) {
 
 
 resize();
+
