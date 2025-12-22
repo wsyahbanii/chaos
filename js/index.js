@@ -212,7 +212,7 @@ const myStories = [
     {
         title: "Spektrum Baru",
         date: "23:26 | 22 Desember 2025",
-        content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَا مُفْلِحَة الزَّهْرَاء"
+        content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَ مُفْلِحَة الزَّهْرَة"
     },
 ];
 
@@ -332,6 +332,7 @@ function loadStory(index) {
 
 
 resize();
+
 
 
 
