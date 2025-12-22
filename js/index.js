@@ -209,6 +209,11 @@ const myStories = [
         date: "22:37 | 16 Desember 2025",
         content: "Ada kalanya, ketenangan justru ditemukan dalam gema distorsi gitar yang memekakkan telinga. Saat dunia luar terlalu bising dengan basa-basi yang melelahkan, menunduk menjadi satu-satunya pelarian. Membiarkan tinta hitam menari liar di atas kertas putih, menciptakan sebuah semesta kecil di mana tidak ada satu pun hal yang perlu dijelaskan kepada siapa saja."
     },
+    {
+        title: "Spektrum Baru",
+        date: "23:26 | 22 Desember 2025",
+        content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَا مُفْلِحَة الزَّهْرَاء"
+    },
 ];
 
 let currentStoryIndex = 0;
@@ -327,6 +332,7 @@ function loadStory(index) {
 
 
 resize();
+
 
 
 
