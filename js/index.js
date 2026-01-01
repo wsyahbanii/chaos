@@ -214,6 +214,11 @@ const myStories = [
         date: "23:26 | 22 Desember 2025",
         content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَ مُفْلِحَة الزَّهْرَة"
     },
+    {
+        title: "Epifani",
+        date: "23:53 | 1 Januari 2026",
+        content:"Melepaskan luka ternyata tak sesulit itu saat ada tangan yang tepat untuk menggenggam. Tahun baru ini bukan hanya soal pergantian angka, tapi soal banyak 'kali pertama' yang dilalui bersamanya. Dari yang terbiasa merayakan kesedihan sendirian, kini menjadi dirayakan oleh seseorang yang penuh kebaikan. Ternyata, bahagia itu sederhana saat kita berhenti mencintai rasa sakit."
+    },
 ];
 
 let currentStoryIndex = 0;
@@ -332,6 +337,7 @@ function loadStory(index) {
 
 
 resize();
+
 
 
 
