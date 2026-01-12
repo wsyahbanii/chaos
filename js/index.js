@@ -219,6 +219,11 @@ const myStories = [
         date: "23:53 | 1 Januari 2026",
         content:"Melepaskan luka ternyata tak sesulit itu saat ada tangan yang tepat untuk menggenggam. Tahun baru ini bukan hanya soal pergantian angka, tapi soal banyak 'kali pertama' yang dilalui bersamanya. Dari yang terbiasa merayakan kesedihan sendirian, kini menjadi dirayakan oleh seseorang yang penuh kebaikan. Ternyata, bahagia itu sederhana saat kita berhenti mencintai rasa sakit."
     },
+    {
+        title: "Tragedi Komedi",
+        date: "1:01 | 13 Januari 2026",
+        content:"Ternyata warna itu tidak permanen; ia luntur dihajar kenyataan. Dia yang kukira rumah, ternyata ikut menancapkan pisau. Tapi anehnya, aku masih di sini membukakan pintu. Ini bukan tentang pengampunan, ini adalah sebuah pertaruhan gila. Aku memberinya kesempatan dengan dua mata pisau: jadilah obat yang menyembuhkan, atau jadilah racun yang jauh lebih mematikan. Hancurkan aku sampai ke titik di mana aku tak bisa lagi menangis, dan hanya bisa tertawa melihat betapa hancurnya diri ini."
+    },
 ];
 
 let currentStoryIndex = 0;
@@ -337,6 +342,7 @@ function loadStory(index) {
 
 
 resize();
+
 
 
 
