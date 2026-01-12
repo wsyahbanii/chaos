@@ -1,16 +1,28 @@
 :root {
-    --paper: #f0f0f0; --ink: #0a0a0a; --accent: #555555; --shadow-color: rgba(0, 0, 0, 0.2);
+    --paper: #d9d9d9; /* Warna kertas lebih kusam/abu-abu */
+    --ink: #050505; 
+    --accent: #333333; 
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --blood-ink: #1a1a1a; /* Tinta yang lebih pekat */
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    background-color: var(--paper); color: var(--ink); font-family: 'Special Elite', monospace;
-    overflow-x: hidden; width: 100vw; min-height: 100vh;
-    cursor: auto; filter: grayscale(100%);
+    background-color: var(--paper); 
+    color: var(--ink); 
+    font-family: 'Special Elite', monospace;
+    overflow-x: hidden; 
+    width: 100vw; 
+    min-height: 100vh;
+    cursor: auto; 
+    /* Efek kontras tinggi untuk kesan dramatis */
+    filter: grayscale(100%) contrast(120%) brightness(90%);
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
-}
-
+    /* Background tambahan: Vignette & Grain */
+    background-image: 
+        radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%),
+        url("https://www.transparenttextures.com/patterns/dust.png");
+}           
 /* Mode Pena: Kunci layar total */
 body.drawing-mode {
     cursor: none; touch-action: none; overflow: hidden;
@@ -19,14 +31,37 @@ body.drawing-mode {
     -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Simulasi bercak tinta besar secara acak */
+    background-image: 
+        radial-gradient(circle at 10% 20%, var(--ink) 0%, transparent 2%),
+        radial-gradient(circle at 90% 80%, var(--ink) 0%, transparent 3%),
+        radial-gradient(circle at 50% 50%, var(--ink) 0%, transparent 1.5%),
+        radial-gradient(circle at 15% 85%, var(--ink) 0%, transparent 2.5%);
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
 /* LAYERS */
 #hatch-canvas, #user-ink-canvas, .paper-texture {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
 }
 #hatch-canvas { z-index: -2; opacity: 0.15; }
 #user-ink-canvas { z-index: 999; mix-blend-mode: multiply; }
-.paper-texture { background-image: url("https://www.transparenttextures.com/patterns/cracked-concrete-wall.png"); opacity: 0.6; z-index: -1; }
-
+/* Tekstur Kertas yang lebih hancur */
+.paper-texture { 
+    background-image: 
+        url("https://www.transparenttextures.com/patterns/asfalt-dark.png"), /* Tekstur kasar */
+        url("https://www.transparenttextures.com/patterns/stains.png"); /* Bercak noda */
+    opacity: 0.4; 
+    z-index: -1; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+}
 /* CURSOR TITIK HITAM */
 #pen-tip {
     position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%;
@@ -222,3 +257,34 @@ button.submit-ink:disabled { opacity: 0.5; cursor: not-allowed; }
     font-family: 'Special Elite', monospace;
 }
 @media (max-width: 768px) { h1 { font-size: 2.5rem; } .chaos-gallery { gap: 40px; } .polaroid { margin-top: 0 !important; margin-left: 0 !important; } nav { top: 20px; right: 20px; } }
+h1 { 
+    font-family: 'Rock Salt', cursive; 
+    font-size: 3.5rem; 
+    margin-bottom: 50px; 
+    line-height: 1.2; 
+    transform: rotate(-3deg); 
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+    animation: textChaos 10s infinite;
+}
+
+@keyframes textChaos {
+    0%, 100% { transform: rotate(-3deg) skew(0deg); }
+    20% { transform: rotate(-2deg) skew(1deg); }
+    40% { transform: rotate(-4deg) skew(-1deg); filter: blur(0.5px); }
+    60% { transform: rotate(-2.5deg) skew(0.5deg); }
+    80% { transform: rotate(-3.5deg) skew(-0.5deg); }
+}
+
+/* Garis bawah navigasi yang bergetar */
+.nav-item:hover { 
+    font-weight: bold; 
+    color: var(--accent); 
+    text-decoration: line-through;
+    animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+    0% { transform: rotate(var(--r)) translate(0, 0); }
+    50% { transform: rotate(var(--r)) translate(1px, -1px); }
+    100% { transform: rotate(var(--r)) translate(-1px, 1px); }
+}
