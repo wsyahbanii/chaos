@@ -37,6 +37,8 @@ Terintegrasi dengan **Formspree** untuk pengiriman pesan anonim secara *serverle
 
 ## 🛠️ Teknologi (The Stack)
 
+https://drive.google.com/drive/folders/1v7cCWv0NsviAJzMPFLkHMVYUSQzsb7PE?usp=drive_link
+
 Project ini dibuat murni menggunakan teknologi dasar web (*Vanilla*) untuk performa maksimal dan kontrol penuh atas animasi.
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
