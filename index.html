@@ -80,7 +80,7 @@
             </div>
 
             <div class="form-paper">
-                <form action="http://localhost/wsyahbanii/assets/api_chaos.php" method="POST">
+                <form action="http://localhost/wsyahbanii.system/api_chaos.php" method="POST">
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Teruntuk:</label>
                         <input type="text" value="Pembaca" disabled style="border-bottom: 2px dashed #333;">
@@ -124,27 +124,21 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const status = params.get('status');
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const statusTxt = document.getElementById('form-status');
     
-            if (status) {
-                const msg = status === 'success' ? "Merpati telah sampai. Pesanmu tersimpan dalam sunyi." : "Angin terlalu kencang. Merpati gagal terbang.";
-                const color = status === 'success' ? '#fff' : '#ff0000';
-    
-                    // Membuat kotak notifikasi secara dinamis
-                const toast = document.createElement('div');
-                toast.style.cssText = `position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#050505; color:${color}; border:1px solid ${color}; padding:15px 30px; font-family:'Special Elite', monospace; font-size:14px; z-index:999999; box-shadow: 4px 4px 0px ${color}; text-align:center;`;
-                toast.innerText = msg;
-                document.body.appendChild(toast);
-    
-                    // Membersihkan URL agar rapi kembali
-                window.history.replaceState(null, null, window.location.pathname);
-    
-                    // Menghilangkan kotak setelah 4 detik
-                setTimeout(() => toast.remove(), 4000);
+        if (status && statusTxt) {
+            if (status === 'success') {
+                statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
+                statusTxt.style.color = "#333"; // Warna tinta gelap sesuai tema
+            } else {
+                statusTxt.innerHTML = "Gagal mengirim: Sinyal terputus.";
+                statusTxt.style.color = "red";
             }
-        });
+            
+            window.history.replaceState(null, null, window.location.pathname);
+        }
     </script>
     
     <script src="js/index.js"></script>
