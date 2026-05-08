@@ -122,24 +122,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const status = params.get('status');
-        const statusTxt = document.getElementById('form-status');
-    
-        if (status && statusTxt) {
-            if (status === 'success') {
-                statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
-                statusTxt.style.color = "#333"; // Warna tinta gelap sesuai tema
-            } else {
-                statusTxt.innerHTML = "Gagal mengirim: Sinyal terputus.";
-                statusTxt.style.color = "red";
-            }
-            
-            window.history.replaceState(null, null, window.location.pathname);
-        }
-    </script>
     
     <script src="js/index.js"></script>
 </body>
