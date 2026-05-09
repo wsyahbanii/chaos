@@ -7,12 +7,8 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Rock+Salt&family=Special+Elite&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <link rel="stylesheet" href="css/index.css">
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
     <div class="paper-texture"></div>
@@ -86,8 +82,12 @@
                         <input type="text" value="Pembaca" disabled style="border-bottom: 2px dashed #333;">
                     </div>
                     <div style="margin-bottom: 20px;">
-                        <label class="form-label">Dari:</label>
+                        <label class="form-label">Dari (Alias):</label>
                         <input type="text" name="from_name" placeholder="Gunakan nama lain jika sungkan.." required>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Email (Opsional):</label>
+                        <input type="email" name="reply_to" placeholder="Untuk balasan merpati..">
                     </div>
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Isi Pesan:</label>
@@ -95,11 +95,12 @@
                     </div>
             
                     <button type="submit" class="submit-ink" id="submit-btn">Kirim Merpati</button>
-                    <div id="form-status"></div>
+                    <div id="form-status" style="margin-top: 15px; font-family: 'Special Elite'; font-size: 0.9rem;"></div>
                 </form>
             </div>
         </section>
     </div>
+
     <div id="story-modal" class="modal-overlay">
         <div class="modal-paper">
             <span class="close-modal" onclick="closeStory()">&times;</span>
@@ -107,13 +108,11 @@
             <div class="story-content">
                 <h2 id="story-title">Judul Cerita</h2>
                 <p id="story-date" style="font-family: 'Special Elite'; font-size: 0.8rem; color: #666; margin-bottom: 20px;"></p>
-                <div id="story-body" class="typewriter-text">
-                    </div>
+                <div id="story-body" class="typewriter-text"></div>
             </div>
             <div class="story-search-wrapper" style="text-align: center; margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 10px;">
                 <label style="font-family: 'Reenie Beanie'; font-size: 1.2rem;">Lompat ke:</label>
-                <select id="story-date-search" onchange="jumpToStory(this.value)">
-                    </select>
+                <select id="story-date-search" onchange="jumpToStory(this.value)"></select>
             </div>
             <div class="story-nav">
                 <button onclick="prevStory()" id="btn-prev" disabled>← Lalu</button>
@@ -123,33 +122,10 @@
         </div>
     </div>
 
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const status = params.get('status');
-        const statusTxt = document.getElementById('form-status');
-    
-        if (status && statusTxt) {
-            if (status === 'success') {
-                statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
-                statusTxt.style.color = "#333"; // Warna tinta gelap sesuai tema
-            } else {
-                statusTxt.innerHTML = "Gagal mengirim: Sinyal terputus.";
-                statusTxt.style.color = "red";
-            }
-            
-            window.history.replaceState(null, null, window.location.pathname);
-        }
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){ emailjs.init("vEkfJBukKK7hxdRW0"); })();
     </script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init("vEkfJBukKK7hxdRW0"); // Ganti dengan Public Key EmailJS kamu
-   })();
-</script>
     <script src="js/index.js"></script>
 </body>
-
 </html>
-
-
-
