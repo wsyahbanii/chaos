@@ -80,14 +80,14 @@
             </div>
 
             <div class="form-paper">
-                <form action="https://system.wsyahbanii.my.id/api_chaos.php" method="POST">
+                <form id="chaosForm" class="contact-form">
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Teruntuk:</label>
                         <input type="text" value="Pembaca" disabled style="border-bottom: 2px dashed #333;">
                     </div>
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Dari:</label>
-                        <input type="text" name="name" placeholder="Gunakan nama lain jika sungkan.." required>
+                        <input type="text" name="from_name" placeholder="Gunakan nama lain jika sungkan.." required>
                     </div>
                     <div style="margin-bottom: 20px;">
                         <label class="form-label">Isi Pesan:</label>
@@ -140,7 +140,12 @@
             window.history.replaceState(null, null, window.location.pathname);
         }
     </script>
-    
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("vEkfJBukKK7hxdRW0"); // Ganti dengan Public Key EmailJS kamu
+   })();
+</script>
     <script src="js/index.js"></script>
 </body>
 
