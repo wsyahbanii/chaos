@@ -1,4 +1,3 @@
-// --- 2. NAVIGASI SPA ---
 function switchSection(sectionId) {
     document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
@@ -13,7 +12,6 @@ function switchSection(sectionId) {
     if(sectionId === 'surat' && navs[3]) navs[3].classList.add('active');
 }
 
-// --- 3. MODE PENA & TOGGLE ---
 let isDrawingMode = false;
 function togglePenMode() {
     isDrawingMode = !isDrawingMode;
@@ -33,7 +31,6 @@ function togglePenMode() {
     }
 }
 
-// --- 4. CANVAS & HATCHING BACKGROUND ---
 const bgCanvas = document.getElementById('hatch-canvas');
 const bgCtx = bgCanvas ? bgCanvas.getContext('2d') : null;
 const inkCanvas = document.getElementById('user-ink-canvas');
@@ -70,7 +67,6 @@ function drawHatching() {
     }
 }
 
-// --- 5. LOGIKA MENGGAMBAR (Mobile & Desktop) ---
 let lastX = 0, lastY = 0, isDown = false;
 
 function getPos(e) {
@@ -144,40 +140,18 @@ function handleEnd() { isDown = false; }
 window.addEventListener('mousedown', handleStart);
 window.addEventListener('mousemove', handleMove);
 window.addEventListener('mouseup', handleEnd);
-
 window.addEventListener('touchstart', handleStart, {passive: false});
 window.addEventListener('touchmove', handleMove, {passive: false});
 window.addEventListener('touchend', handleEnd);
-
 window.addEventListener("contextmenu", function(e) {
-    if (isDrawingMode) {
-        e.preventDefault();
-        return false;
-    }
+    if (isDrawingMode) { e.preventDefault(); return false; }
 });
 
-// --- 6. FITUR CERITA TERSEMBUNYI (HIDDEN STORY) ---
 const myStories = [
-    {
-        title: "Catharsis",
-        date: "22:37 | 16 Desember 2025",
-        content: "Ada kalanya, ketenangan justru ditemukan dalam gema distorsi gitar yang memekakkan telinga. Saat dunia luar terlalu bising dengan basa-basi yang melelahkan, menunduk menjadi satu-satunya pelarian. Membiarkan tinta hitam menari liar di atas kertas putih, menciptakan sebuah semesta kecil di mana tidak ada satu pun hal yang perlu dijelaskan kepada siapa saja."
-    },
-    {
-        title: "Spektrum Baru",
-        date: "23:26 | 22 Desember 2025",
-        content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَ مُفْلِحَة الزَّهْرَة"
-    },
-    {
-        title: "Epifani",
-        date: "23:53 | 1 Januari 2026",
-        content:"Melepaskan luka ternyata tak sesulit itu saat ada tangan yang tepat untuk menggenggam. Tahun baru ini bukan hanya soal pergantian angka, tapi soal banyak 'kali pertama' yang dilalui bersamanya. Dari yang terbiasa merayakan kesedihan sendirian, kini menjadi dirayakan oleh seseorang yang penuh kebaikan. Ternyata, bahagia itu sederhana saat kita berhenti mencintai rasa sakit."
-    },
-    {
-        title: "Tragedi Komedi",
-        date: "1:01 | 13 Januari 2026",
-        content:"Ternyata warna itu tidak permanen; ia luntur dihajar kenyataan. Dia yang kukira rumah, ternyata ikut menancapkan pisau. Tapi anehnya, aku masih di sini membukakan pintu. Ini bukan tentang pengampunan, ini adalah sebuah pertaruhan gila. Aku memberinya kesempatan dengan dua mata pisau: jadilah obat yang menyembuhkan, atau jadilah racun yang jauh lebih mematikan. Hancurkan aku sampai ke titik di mana aku tak bisa lagi menangis, dan hanya bisa tertawa melihat betapa hancurnya diri ini."
-    }
+    { title: "Catharsis", date: "22:37 | 16 Desember 2025", content: "Ada kalanya, ketenangan justru ditemukan dalam gema distorsi gitar yang memekakkan telinga. Saat dunia luar terlalu bising dengan basa-basi yang melelahkan, menunduk menjadi satu-satunya pelarian. Membiarkan tinta hitam menari liar di atas kertas putih, menciptakan sebuah semesta kecil di mana tidak ada satu pun hal yang perlu dijelaskan kepada siapa saja." },
+    { title: "Spektrum Baru", date: "23:26 | 22 Desember 2025", content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَ مُفْلِحَة الزَّهْرَة" },
+    { title: "Epifani", date: "23:53 | 1 Januari 2026", content:"Melepaskan luka ternyata tak sesulit itu saat ada tangan yang tepat untuk menggenggam. Tahun baru ini bukan hanya soal pergantian angka, tapi soal banyak 'kali pertama' yang dilalui bersamanya. Dari yang terbiasa merayakan kesedihan sendirian, kini menjadi dirayakan oleh seseorang yang penuh kebaikan. Ternyata, bahagia itu sederhana saat kita berhenti mencintai rasa sakit." },
+    { title: "Tragedi Komedi", date: "1:01 | 13 Januari 2026", content:"Ternyata warna itu tidak permanen; ia luntur dihajar kenyataan. Dia yang kukira rumah, ternyata ikut menancapkan pisau. Tapi anehnya, aku masih di sini membukakan pintu. Ini bukan tentang pengampunan, ini adalah sebuah pertaruhan gila. Aku memberinya kesempatan dengan dua mata pisau: jadilah obat yang menyembuhkan, atau jadilah racun yang jauh lebih mematikan. Hancurkan aku sampai ke titik di mana aku tak bisa lagi menangis, dan hanya bisa tertawa melihat betapa hancurnya diri ini." }
 ];
 
 let currentStoryIndex = 0;
@@ -208,19 +182,14 @@ function populateDateSearch() {
 
 function loadStory(index) {
     if (index < 0 || index >= myStories.length) return;
-    
     const story = myStories[index];
     titleEl.innerText = story.title;
     dateEl.innerText = story.date;
     bodyEl.innerText = story.content;
     indicatorEl.innerText = (index + 1) + " / " + myStories.length;
-    
     btnPrev.disabled = (index === 0);
     btnNext.disabled = (index === myStories.length - 1);
-
-    if (dateSearchInput) {
-        dateSearchInput.value = index; 
-    }
+    if (dateSearchInput) { dateSearchInput.value = index; }
 }
 
 function openStory() {
@@ -256,11 +225,8 @@ function jumpToStory(indexVal) {
     loadStory(currentStoryIndex);
 }
 
-// Panggil resize di awal
 resize();
 
-// --- 7. LOGIKA KIRIM SURAT (EMAILJS) ---
-// Dibungkus DOMContentLoaded agar tidak memblokir render HTML
 document.addEventListener('DOMContentLoaded', () => {
     const chaosForm = document.getElementById('chaosForm');
     const submitBtn = document.getElementById('submit-btn');
@@ -270,13 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
         chaosForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            // Status: Merpati sedang terbang
             const originalText = submitBtn.innerText;
             submitBtn.innerText = "Merpati Terbang...";
             submitBtn.disabled = true;
             statusTxt.innerText = "";
 
-            // Kirim via EmailJS
             emailjs.sendForm('service_llora7l', 'template_bu4yg2e', this)
                 .then(() => {
                     statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
