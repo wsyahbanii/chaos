@@ -136,7 +136,6 @@ function handleMove(e) {
             inkCtx.fill();
         }
     }
-
     lastX = pos.x; lastY = pos.y;
 }
 
@@ -167,7 +166,7 @@ const myStories = [
     {
         title: "Spektrum Baru",
         date: "23:26 | 22 Desember 2025",
-        content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَ مُفْلِحَة الزَّهْرَة"
+        content: "Kenyamanan tidak lagi hanya milik kesedihan. Ada transisi perlahan di mana hati mulai berdamai dengan kebahagiaan. Di tengah perubahan ini, hadir sebuah sosok pembawa terang—simbol keberuntungan dan kemuliaan. Kehadirannya adalah tanda bahwa masa depan tidak harus selalu kelabu.\n\nآيْدَ مُفْلِحَة الزَّهْرَة"
     },
     {
         title: "Epifani",
@@ -178,7 +177,7 @@ const myStories = [
         title: "Tragedi Komedi",
         date: "1:01 | 13 Januari 2026",
         content:"Ternyata warna itu tidak permanen; ia luntur dihajar kenyataan. Dia yang kukira rumah, ternyata ikut menancapkan pisau. Tapi anehnya, aku masih di sini membukakan pintu. Ini bukan tentang pengampunan, ini adalah sebuah pertaruhan gila. Aku memberinya kesempatan dengan dua mata pisau: jadilah obat yang menyembuhkan, atau jadilah racun yang jauh lebih mematikan. Hancurkan aku sampai ke titik di mana aku tak bisa lagi menangis, dan hanya bisa tertawa melihat betapa hancurnya diri ini."
-    },
+    }
 ];
 
 let currentStoryIndex = 0;
@@ -189,18 +188,22 @@ const bodyEl = document.getElementById('story-body');
 const indicatorEl = document.getElementById('story-indicator');
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
+const dateSearchInput = document.getElementById('story-date-search');
 
-function openStory() {
-    if(!modal) return;
-    loadStory(currentStoryIndex);
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Stop scroll background
-}
+function populateDateSearch() {
+    dateSearchInput.innerHTML = "";
+    let defaultOpt = document.createElement('option');
+    defaultOpt.text = "-- Pilih Tanggal --";
+    defaultOpt.disabled = true;
+    defaultOpt.selected = true;
+    dateSearchInput.add(defaultOpt);
 
-function closeStory() {
-    if(!modal) return;
-    modal.classList.remove('open');
-    document.body.style.overflow = 'auto'; // Resume scroll
+    myStories.forEach((story, index) => {
+        let opt = document.createElement('option');
+        opt.value = index; 
+        opt.text = story.date; 
+        dateSearchInput.add(opt);
+    });
 }
 
 function loadStory(index) {
@@ -210,13 +213,28 @@ function loadStory(index) {
     titleEl.innerText = story.title;
     dateEl.innerText = story.date;
     bodyEl.innerText = story.content;
-    
-    // Update Indikator Halaman
     indicatorEl.innerText = (index + 1) + " / " + myStories.length;
-
-    // Atur tombol Next/Prev
+    
     btnPrev.disabled = (index === 0);
     btnNext.disabled = (index === myStories.length - 1);
+
+    if (dateSearchInput) {
+        dateSearchInput.value = index; 
+    }
+}
+
+function openStory() {
+    if(!modal) return;
+    populateDateSearch(); 
+    loadStory(currentStoryIndex);
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden'; 
+}
+
+function closeStory() {
+    if(!modal) return;
+    modal.classList.remove('open');
+    document.body.style.overflow = 'auto'; 
 }
 
 function nextStory() {
@@ -233,111 +251,46 @@ function prevStory() {
     }
 }
 
-// --- UPDATE JAVASCRIPT FITUR CERITA ---
-
-// 1. Tambahkan variabel selector
-const dateSearchInput = document.getElementById('story-date-search');
-
-// 2. Modifikasi fungsi openStory untuk sekaligus mengisi daftar tanggal
-function openStory() {
-    if(!modal) return;
-    
-    populateDateSearch(); // <--- Panggil fungsi baru ini
-    
-    loadStory(currentStoryIndex);
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-
-// 3. Fungsi Baru: Mengisi Dropdown Tanggal
-function populateDateSearch() {
-    // Kosongkan dulu isinya
-    dateSearchInput.innerHTML = "";
-    
-    // Tambahkan opsi default
-    let defaultOpt = document.createElement('option');
-    defaultOpt.text = "-- Pilih Tanggal --";
-    defaultOpt.disabled = true;
-    defaultOpt.selected = true;
-    dateSearchInput.add(defaultOpt);
-
-    // Loop array myStories dan buat opsi untuk setiap tanggal
-    myStories.forEach((story, index) => {
-        let opt = document.createElement('option');
-        opt.value = index; // Nilai opsinya adalah index array (0, 1, 2...)
-        opt.text = story.date; // Teks yang muncul adalah Tanggalnya
-        dateSearchInput.add(opt);
-    });
-}
-
-// 4. Fungsi Baru: Lompat ke Cerita saat tanggal dipilih
 function jumpToStory(indexVal) {
-    currentStoryIndex = parseInt(indexVal); // Ubah string ke number
+    currentStoryIndex = parseInt(indexVal); 
     loadStory(currentStoryIndex);
 }
 
-// 5. Update fungsi loadStory agar dropdown juga ikut berubah jika kita klik Next/Prev
-// (Tambahkan baris ini di dalam fungsi loadStory yang sudah ada)
-function loadStory(index) {
-    if (index < 0 || index >= myStories.length) return;
-    
-    const story = myStories[index];
-    titleEl.innerText = story.title;
-    dateEl.innerText = story.date;
-    bodyEl.innerText = story.content;
-    indicatorEl.innerText = (index + 1) + " / " + myStories.length;
-    
-    btnPrev.disabled = (index === 0);
-    btnNext.disabled = (index === myStories.length - 1);
-
-    // --- TAMBAHAN BARU: Sinkronisasi Dropdown ---
-    // Agar jika kita klik Next, dropdownnya ikut berubah sesuai tanggal cerita sekarang
-    dateSearchInput.value = index; 
-}
-
-
+// Panggil resize di awal
 resize();
 
 // --- 7. LOGIKA KIRIM SURAT (EMAILJS) ---
-const chaosForm = document.getElementById('chaosForm');
-const submitBtn = document.getElementById('submit-btn');
-const statusTxt = document.getElementById('form-status');
+// Dibungkus DOMContentLoaded agar tidak memblokir render HTML
+document.addEventListener('DOMContentLoaded', () => {
+    const chaosForm = document.getElementById('chaosForm');
+    const submitBtn = document.getElementById('submit-btn');
+    const statusTxt = document.getElementById('form-status');
 
-if (chaosForm) {
-    chaosForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+    if (chaosForm && submitBtn) {
+        chaosForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        // Status: Merpati sedang terbang
-        const originalText = submitBtn.innerText;
-        submitBtn.innerText = "Merpati Terbang...";
-        submitBtn.disabled = true;
-        statusTxt.innerText = "";
+            // Status: Merpati sedang terbang
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Merpati Terbang...";
+            submitBtn.disabled = true;
+            statusTxt.innerText = "";
 
-        // Kirim via EmailJS
-        // Pastikan Service ID dan Template ID sudah sesuai dashboard
-        emailjs.sendForm('service_llora7l', 'template_bu4yg2e', this)
-            .then(() => {
-                // Berhasil
-                statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
-                statusTxt.style.color = "#333";
-                chaosForm.reset();
-            }, (error) => {
-                // Gagal
-                statusTxt.innerHTML = "Gagal mengirim: Sinyal terputus.";
-                statusTxt.style.color = "red";
-                console.error("EmailJS Error:", error);
-            })
-            .finally(() => {
-                // Kembalikan tombol
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
-            });
-    });
-}
-
-
-
-
-
-
-
+            // Kirim via EmailJS
+            emailjs.sendForm('service_llora7l', 'template_bu4yg2e', this)
+                .then(() => {
+                    statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
+                    statusTxt.style.color = "#333";
+                    chaosForm.reset();
+                }, (error) => {
+                    statusTxt.innerHTML = "Gagal mengirim: Sinyal terputus.";
+                    statusTxt.style.color = "red";
+                    console.error("EmailJS Error:", error);
+                })
+                .finally(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+    }
+});
