@@ -298,6 +298,43 @@ function loadStory(index) {
 
 resize();
 
+// --- 7. LOGIKA KIRIM SURAT (EMAILJS) ---
+const chaosForm = document.getElementById('chaosForm');
+const submitBtn = document.getElementById('submit-btn');
+const statusTxt = document.getElementById('form-status');
+
+if (chaosForm) {
+    chaosForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Status: Merpati sedang terbang
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = "Merpati Terbang...";
+        submitBtn.disabled = true;
+        statusTxt.innerText = "";
+
+        // Kirim via EmailJS
+        // Pastikan Service ID dan Template ID sudah sesuai dashboard
+        emailjs.sendForm('service_llora7l', 'template_bu4yg2e', this)
+            .then(() => {
+                // Berhasil
+                statusTxt.innerHTML = "Merpati berhasil sampai! Terima kasih.";
+                statusTxt.style.color = "#333";
+                chaosForm.reset();
+            }, (error) => {
+                // Gagal
+                statusTxt.innerHTML = "Gagal mengirim: Sinyal terputus.";
+                statusTxt.style.color = "red";
+                console.error("EmailJS Error:", error);
+            })
+            .finally(() => {
+                // Kembalikan tombol
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            });
+    });
+}
+
 
 
 
