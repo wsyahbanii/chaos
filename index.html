@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Graha Niskala</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&family=Rock+Salt&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="paper-texture"></div>
+    <canvas id="hatch-canvas"></canvas>
+    <canvas id="user-ink-canvas"></canvas>
+    
+    <div id="pen-tip"></div>
+
+    <button id="toggle-pen-btn" class="pen-toggle-btn" onclick="togglePenMode()">
+        <i class="fas fa-pen-nib"></i>
+    </button>
+
+    <nav>
+        <a class="nav-item active" onclick="switchSection('mukadimah')" style="--r: -3deg;">Mukadimah</a>
+        <a class="nav-item" onclick="switchSection('karya')" style="--r: 2deg;">Karya.Kasar</a>
+        <a class="nav-item" onclick="switchSection('kanvas')" style="--r: -2deg;">Kanvas</a>
+        <a class="nav-item" onclick="switchSection('surat')" style="--r: 4deg;">Kirim.Surat</a>
+    </nav>
+
+    <div class="wrapper">
+        <section id="mukadimah" class="section active">
+            <h1>Manifesto<br>Pralaya.</h1>
+            <div class="torn-box" style="transform: rotate(1deg);">
+                <div class="tape"></div>
+                <div class="manifesto">
+                    <p>Swasti Prapta,</p><br>
+                    <p>Ini bukan <span style="text-decoration: line-through;">portofolio.</span> Ini adalah tempat segala filosofi bertemu. Perkenalkan saya <span class="highlight">Wahyu Syahbani</span>, gemar melukis apa yang tak terkatakan, menikmati <span class="highlight">Pralaya</span> selayaknya sebuah <span style="text-decoration: line-through;">ketidaksempurnaan.</span></p><br>
+                    <p>Ruang ini bukan hanya milik saya. Tapi kalian juga, Pakai tombol pena dipojok kanan guna Menuangkan <span class="highlight">Citta</span> (rasa & pikiran) kalian disini. Mari kita rayakan <span style="text-decoration: line-through;">ketidaksempurnaan</span> bersama-sama.</p><br>
+                    <p style="font-family: 'Reenie Beanie'; font-size: 1.5rem; color: var(--accent);">"suicide season."</p>
+                </div>
+            </div>
+            <div style="text-align: right; margin-top: 50px;"><div style="display: inline-block; border: 3px double var(--accent); color: var(--accent); padding: 10px 20px; font-weight: bold; transform: rotate(-10deg);">APPROVED<br>BY CHAOS</div></div>
+        </section>
+
+        <section id="karya" class="section">
+            <h1 style="text-align: left; font-size: 3rem;">Citra Klesa</h1>
+            <div class="chaos-gallery">
+                <div class="polaroid"><div class="tape"></div><img src="img/sk1.png" alt="Web"><div class="polaroid-caption">Gapaian Menuju Sunyata</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk2.png" alt="Design"><div class="polaroid-caption">Mencari Alambana</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk3.png" alt="Code"><div class="polaroid-caption">Sorot Krodha</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk4.png" alt="Indie"><div class="polaroid-caption">Hiruk Citta</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk5.png" alt="Sketch"><div class="polaroid-caption">Titik Adhara</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk6.png" alt="Art"><div class="polaroid-caption">Jejak Yatra</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk7.png" alt="Mess"><div class="polaroid-caption">Gema Atma</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk8.png" alt="Cry"><div class="polaroid-caption">Tamas Krandana</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk9.jpg" alt="Cry"><div class="polaroid-caption">Atma Vilapa</div></div>
+                <div class="polaroid"><div class="tape"></div><img src="img/sk10.jpg" alt="Cry"><div class="polaroid-caption">Tamas Krandana</div></div>
+            </div>
+        </section>
+
+        <section id="kanvas" class="section">
+            <h1 style="text-align: center; font-size: 3rem;">Hampa</h1>
+            <p style="text-align: center; margin-bottom: 20px; font-family: 'Reenie Beanie'; font-size: 1.5rem;">( Silakan coret di sini dan tangkap layar )</p>
+            <div class="torn-box blank-canvas-area" style="transform: rotate(0deg);">
+                <div class="tape"></div>
+                <h2 style="font-family: 'Reenie Beanie'; font-size: 3rem; opacity: 0.1;">Sunyata</h2>
+            </div>
+        </section>
+
+        <section id="surat" class="section">
+            <h1 style="font-size: 3rem; margin-left: 20px;">Patra Duka</h1>
+
+            <div class="secret-story-container">
+                <span id="secret-trigger" onclick="openStory()">Click This Button</span>
+            </div>
+
+            <div class="form-paper">
+                <form id="chaosForm" class="contact-form">
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Teruntuk:</label>
+                        <input type="text" value="Pembaca" disabled style="border-bottom: 2px dashed #333;">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Dari (Alias):</label>
+                        <input type="text" name="from_name" placeholder="Gunakan nama lain jika sungkan.." required>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Email (Opsional):</label>
+                        <input type="email" name="reply_to" placeholder="Untuk balasan merpati..">
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="form-label">Isi Pesan:</label>
+                        <textarea name="message" rows="4" placeholder="Ceritakan sesuatu..." required></textarea>
+                    </div>
+            
+                    <button type="submit" class="submit-ink" id="submit-btn">Kirim Merpati</button>
+                    <div id="form-status" style="margin-top: 15px; font-family: 'Special Elite'; font-size: 0.9rem;"></div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <div id="story-modal" class="modal-overlay">
+        <div class="modal-paper">
+            <span class="close-modal" onclick="closeStory()">&times;</span>
+        
+            <div class="story-content">
+                <h2 id="story-title">Judul Cerita</h2>
+                <p id="story-date" style="font-family: 'Special Elite'; font-size: 0.8rem; color: #666; margin-bottom: 20px;"></p>
+                <div id="story-body" class="typewriter-text"></div>
+            </div>
+            <div class="story-search-wrapper" style="text-align: center; margin-top: 20px; border-top: 1px dashed #ccc; padding-top: 10px;">
+                <label style="font-family: 'Reenie Beanie'; font-size: 1.2rem;">Lompat ke:</label>
+                <select id="story-date-search" onchange="jumpToStory(this.value)"></select>
+            </div>
+            <div class="story-nav">
+                <button onclick="prevStory()" id="btn-prev" disabled>← Lalu</button>
+                <span id="story-indicator">1/1</span>
+                <button onclick="nextStory()" id="btn-next">Kini →</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){ emailjs.init("vEkfJBukKK7hxdRW0"); })();
+    </script>
+    <script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+:root {
+    --paper: #d9d9d9; /* Warna kertas lebih kusam/abu-abu */
+    --ink: #050505; 
+    --accent: #333333; 
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --blood-ink: #1a1a1a; /* Tinta yang lebih pekat */
+}
+
+body {
+    background-color: var(--paper); 
+    color: var(--ink); 
+    font-family: 'Special Elite', monospace;
+    overflow-x: hidden; 
+    width: 100vw; 
+    min-height: 100vh;
+    cursor: auto; 
+    /* Efek kontras tinggi untuk kesan dramatis */
+    filter: grayscale(100%) contrast(120%) brightness(90%);
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+    /* Background tambahan: Vignette & Grain */
+    background-image: 
+        radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%),
+        url("https://www.transparenttextures.com/patterns/dust.png");
+}           
+/* Mode Pena: Kunci layar total */
+body.drawing-mode {
+    cursor: none; touch-action: none; overflow: hidden;
+    position: fixed; width: 100%; height: 100%;
+    -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    /* Simulasi bercak tinta besar secara acak */
+    background-image: 
+        radial-gradient(circle at 10% 20%, var(--ink) 0%, transparent 2%),
+        radial-gradient(circle at 90% 80%, var(--ink) 0%, transparent 3%),
+        radial-gradient(circle at 50% 50%, var(--ink) 0%, transparent 1.5%),
+        radial-gradient(circle at 15% 85%, var(--ink) 0%, transparent 2.5%);
+    opacity: 0.1;
+    z-index: -1;
+    pointer-events: none;
+}
+/* LAYERS */
+#hatch-canvas, #user-ink-canvas, .paper-texture {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+}
+#hatch-canvas { z-index: -2; opacity: 0.15; }
+#user-ink-canvas { z-index: 999; mix-blend-mode: multiply; }
+/* Tekstur Kertas yang lebih hancur */
+.paper-texture { 
+    background-image: 
+        url("https://www.transparenttextures.com/patterns/asfalt-dark.png"), /* Tekstur kasar */
+        url("https://www.transparenttextures.com/patterns/stains.png"); /* Bercak noda */
+    opacity: 0.4; 
+    z-index: -1; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+}
+/* CURSOR TITIK HITAM */
+#pen-tip {
+    position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%;
+    pointer-events: none; z-index: 10000; display: none; transform: translate(-50%, -50%);
+    will-change: left, top;
+}
+body.drawing-mode #pen-tip { display: block; }
+
+/* FAB BUTTON */
+.pen-toggle-btn {
+    position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+    background: #fff; border: 2px solid var(--ink); border-radius: 50%;
+    z-index: 10001; display: flex; justify-content: center; align-items: center;
+    font-size: 1.5rem; color: var(--ink); box-shadow: 4px 4px 0 var(--shadow-color);
+    cursor: pointer; transition: 0.3s;
+}
+.pen-toggle-btn:hover { transform: scale(1.1); }
+.pen-toggle-btn.active { background: var(--ink); color: #fff; transform: rotate(-10deg); }
+.pen-toggle-btn::after {
+    content: "Mode Scroll"; position: absolute; right: 70px; background: var(--ink); color: #fff;
+    padding: 5px 10px; font-family: 'Reenie Beanie'; font-size: 1.2rem; border-radius: 5px;
+    opacity: 0; transition: 0.3s; pointer-events: none; white-space: nowrap;
+}
+.pen-toggle-btn:hover::after { opacity: 1; } .pen-toggle-btn.active::after { content: "Mode Coret"; }
+
+/* NAV */
+nav { position: fixed; top: 30px; right: 40px; display: flex; flex-direction: column; gap: 10px; z-index: 100; }
+.nav-item { font-family: 'Reenie Beanie', cursive; font-size: 2rem; text-decoration: none; color: var(--ink); transform: rotate(var(--r)); transition: 0.3s; width: max-content; cursor: pointer; }
+.nav-item:hover, .nav-item.active { font-weight: bold; color: var(--accent); text-decoration: line-through; }
+
+/* CONTENT */
+.wrapper { max-width: 1200px; margin: 0 auto; padding: 100px 40px; position: relative; z-index: 10; }
+.section { display: none; animation: fadeInSketch 0.8s ease-out; } .section.active { display: block; }
+@keyframes fadeInSketch { 0% { opacity: 0; transform: translateY(20px); filter: blur(2px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
+
+h1 { font-family: 'Rock Salt', cursive; font-size: 3.5rem; margin-bottom: 50px; line-height: 1.2; transform: rotate(-2deg); }
+.torn-box { background: #fff; padding: 30px; box-shadow: 5px 5px 15px var(--shadow-color); position: relative; margin-bottom: 40px; clip-path: polygon(2% 0, 98% 1%, 100% 98%, 85% 96%, 75% 100%, 0% 98%, 1% 80%, 0 20%); }
+.tape { position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 120px; height: 35px; background: rgba(200,200,200,0.4); border-left: 1px dotted #999; border-right: 1px dotted #999; }
+.manifesto { font-size: 1.2rem; line-height: 1.8; max-width: 700px; transform: rotate(1deg); } .highlight { background: #ddd; padding: 0 5px; color: #000; }
+
+.chaos-gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding-bottom: 100px; }
+.polaroid { background: #fff; padding: 10px 10px 35px 10px; width: 280px; box-shadow: 3px 6px 15px var(--shadow-color); transition: 0.3s; position: relative; transform: rotate(var(--rot)); margin-top: var(--mt, 0); margin-left: var(--ml, 0); }
+.polaroid:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 50; }
+.polaroid img { width: 100%; height: 220px; object-fit: cover; border: 1px solid #333; filter: contrast(1.2); }
+.polaroid-caption { font-family: 'Reenie Beanie'; font-size: 1.5rem; color: var(--ink); position: absolute; bottom: 5px; left: 0; width: 100%; text-align: center; }
+.polaroid:nth-child(1) { --rot: -4deg; --mt: 0px; } .polaroid:nth-child(2) { --rot: 3deg; --mt: 50px; } .polaroid:nth-child(3) { --rot: -6deg; --mt: 0px; } .polaroid:nth-child(4) { --rot: 5deg; --mt: 30px; } .polaroid:nth-child(5) { --rot: -3deg; --mt: 10px; } .polaroid:nth-child(6) { --rot: 7deg; --mt: 10px; } .polaroid:nth-child(7) { --rot: -5deg; --mt: -20px; } .polaroid:nth-child(8) { --rot: 10deg; --mt: -10px; } .polaroid:nth-child(9) { --rot: 7deg; --mt: 10px; } .polaroid:nth-child(10) { --rot: 7deg; --mt: 10px; }
+
+.form-paper { background: repeating-linear-gradient(#fff, #fff 24px, #ccc 25px); padding: 30px; max-width: 600px; margin: 0 auto; box-shadow: 10px 10px 0 var(--shadow-color); border: 1px solid #999; transform: rotate(1deg); }
+input, textarea { background: transparent; border: none; width: 100%; font-family: 'Reenie Beanie'; font-size: 1.8rem; outline: none; margin-top: 3px; color: #000; }
+.form-label { font-family: 'Special Elite'; font-size: 0.8rem; text-transform: uppercase; color: #666; }
+button.submit-ink { font-family: 'Rock Salt'; font-size: 1.2rem; background: none; border: 2px solid var(--ink); padding: 10px 25px; margin: 20px auto 0; display: block; transform: rotate(-2deg); cursor: pointer; color: var(--ink); transition: 0.3s; }
+button.submit-ink:hover { background: var(--ink); color: #fff; transform: rotate(2deg); }
+button.submit-ink:disabled { opacity: 0.5; cursor: not-allowed; }
+#form-status { font-family: 'Reenie Beanie'; font-size: 1.5rem; text-align: center; margin-top: 15px; min-height: 30px; }
+
+.blank-canvas-area { min-height: 70vh; background: #fff; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.1); display: flex; justify-content: center; align-items: center; flex-direction: column; border: 1px solid #ddd; }
+/* TOMBOL RAHASIA */
+#secret-trigger {
+    font-size: 1.5rem;
+    font-family: 'Reenie Beanie';
+    cursor: pointer;
+    opacity: 0.2; /* Hampir transparan/tersembunyi */
+    transition: 0.5s;
+    vertical-align: middle;
+}
+
+#secret-trigger:hover {
+    opacity: 1; /* Muncul saat di-hover */
+    color: var(--accent);
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 20000; /* Di atas segalanya */
+    display: none; /* Default sembunyi */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.open {
+    display: flex;
+    opacity: 1;
+}
+
+/* KERTAS CERITA */
+.modal-paper {
+    background: #fdfbf7;
+    width: 90%;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 40px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    position: relative;
+    transform: rotate(1deg);
+    background-image: url("https://www.transparenttextures.com/patterns/cracked-concrete-wall.png");
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px; right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    font-family: 'Rock Salt';
+    color: #999;
+}
+.close-modal:hover { color: #000; }
+
+.story-content h2 {
+    font-family: 'Reenie Beanie';
+    font-size: 2.5rem;
+    border-bottom: 1px dashed #999;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.typewriter-text {
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    line-height: 1.6;
+    white-space: pre-line; /* Agar enter terbaca */
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+/* NAVIGASI CERITA */
+.story-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    border-top: 2px double #ccc;
+    padding-top: 15px;
+}
+
+/* UPDATE CSS UNTUK CONTAINER TOMBOL */
+.secret-story-container {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -20px; /* Sedikit menaikkan posisi agar lebih dekat ke judul */
+}
+
+#secret-trigger {
+    font-size: 2rem; /* Ukuran font sedikit diperbesar agar lebih terlihat */
+    font-family: 'Reenie Beanie';
+    cursor: pointer;
+    opacity: 0.5; /* Tetap samar */
+    transition: 0.5s;
+    display: inline-block;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 0px;
+    text-decoration: underline 2px ;
+}
+/* ... (CSS secret-trigger:hover dan lainnya tetap sama) ... */
+.story-nav button {
+    background: none;
+    border: none;
+    font-family: 'Rock Salt';
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--ink);
+    opacity: 0.6;
+}
+.story-nav button:hover:not(:disabled) { opacity: 1; transform: scale(1.1); }
+.story-nav button:disabled { opacity: 0.2; cursor: default; }
+
+#story-indicator { font-family: 'Reenie Beanie'; font-size: 1.5rem; }
+/* GAYA UNTUK DROPDOWN PENCARIAN */
+#story-date-search {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--ink); /* Garis bawah seperti tulisan */
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+    color: var(--ink);
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+}
+
+#story-date-search option {
+    background: #fdfbf7; /* Warna kertas */
+    font-family: 'Special Elite', monospace;
+}
+@media (max-width: 768px) { h1 { font-size: 2.5rem; } .chaos-gallery { gap: 40px; } .polaroid { margin-top: 0 !important; margin-left: 0 !important; } nav { top: 20px; right: 20px; } }
+h1 { 
+    font-family: 'Rock Salt', cursive; 
+    font-size: 3.5rem; 
+    margin-bottom: 50px; 
+    line-height: 1.2; 
+    transform: rotate(-3deg); 
+    text-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+    animation: textChaos 10s infinite;
+}
+
+@keyframes textChaos {
+    0%, 100% { transform: rotate(-3deg) skew(0deg); }
+    20% { transform: rotate(-2deg) skew(1deg); }
+    40% { transform: rotate(-4deg) skew(-1deg); filter: blur(0.5px); }
+    60% { transform: rotate(-2.5deg) skew(0.5deg); }
+    80% { transform: rotate(-3.5deg) skew(-0.5deg); }
+}
+
+/* Garis bawah navigasi yang bergetar */
+.nav-item:hover { 
+    font-weight: bold; 
+    color: var(--accent); 
+    text-decoration: line-through;
+    animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+    0% { transform: rotate(var(--r)) translate(0, 0); }
+    50% { transform: rotate(var(--r)) translate(1px, -1px); }
+    100% { transform: rotate(var(--r)) translate(-1px, 1px); }
+}
