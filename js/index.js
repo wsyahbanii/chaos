@@ -13,21 +13,22 @@ function switchSection(sectionId) {
 }
 
 let isDrawingMode = false;
+const PEN_ICON_PATH = '<path d="M17 3l4 4L7 21l-5 1 1-5L17 3z"></path>';
+const HAND_ICON_PATH = '<path d="M9 11.5V6a1.5 1.5 0 0 1 3 0v4"></path><path d="M12 10V4.5a1.5 1.5 0 0 1 3 0V10"></path><path d="M15 10V6a1.5 1.5 0 0 1 3 0v6"></path><path d="M18 12v2a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7l-2-3a1.4 1.4 0 0 1 2-2l1 1"></path>';
+
 function togglePenMode() {
     isDrawingMode = !isDrawingMode;
     const btn = document.getElementById('toggle-pen-btn');
-    const icon = btn.querySelector('i');
+    const icon = document.getElementById('pen-icon');
     
     if (isDrawingMode) {
         document.body.classList.add('drawing-mode');
         btn.classList.add('active');
-        icon.classList.remove('fa-pen-nib'); 
-        icon.classList.add('fa-hand-pointer'); 
+        icon.innerHTML = HAND_ICON_PATH;
     } else {
         document.body.classList.remove('drawing-mode');
         btn.classList.remove('active');
-        icon.classList.remove('fa-hand-pointer'); 
-        icon.classList.add('fa-pen-nib');
+        icon.innerHTML = PEN_ICON_PATH;
     }
 }
 

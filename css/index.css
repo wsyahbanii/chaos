@@ -14,14 +14,12 @@ body {
     width: 100vw; 
     min-height: 100vh;
     cursor: auto; 
-    /* Efek kontras tinggi untuk kesan dramatis */
-    filter: grayscale(100%) contrast(120%) brightness(90%);
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior: none;
-    /* Background tambahan: Vignette & Grain */
+    /* Background tambahan: Vignette & Grain (self-hosted, dulu 3 request ke transparenttextures.com) */
     background-image: 
         radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%),
-        url("https://www.transparenttextures.com/patterns/dust.png");
+        url("img/noise.webp");
 }           
 /* Mode Pena: Kunci layar total */
 body.drawing-mode {
@@ -46,6 +44,13 @@ body::before {
     pointer-events: none;
 }
 /* LAYERS */
+/* Efek kontras tinggi untuk kesan dramatis, dipindah dari body ke konten saja
+   supaya #user-ink-canvas (yang di-repaint terus tiap user gambar) tidak ikut
+   di-filter ulang setiap frame -> jauh lebih ringan saat drawing/scroll */
+nav, .wrapper, #story-modal {
+    filter: grayscale(100%) contrast(120%) brightness(90%);
+}
+
 #hatch-canvas, #user-ink-canvas, .paper-texture {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
 }
@@ -53,9 +58,7 @@ body::before {
 #user-ink-canvas { z-index: 999; mix-blend-mode: multiply; }
 /* Tekstur Kertas yang lebih hancur */
 .paper-texture { 
-    background-image: 
-        url("https://www.transparenttextures.com/patterns/asfalt-dark.png"), /* Tekstur kasar */
-        url("https://www.transparenttextures.com/patterns/stains.png"); /* Bercak noda */
+    background-image: url("img/noise.webp"); /* self-hosted, dulu 2 request CDN eksternal */
     opacity: 0.4; 
     z-index: -1; 
     position: fixed;
@@ -164,7 +167,7 @@ button.submit-ink:disabled { opacity: 0.5; cursor: not-allowed; }
     box-shadow: 0 0 50px rgba(0,0,0,0.5);
     position: relative;
     transform: rotate(1deg);
-    background-image: url("https://www.transparenttextures.com/patterns/cracked-concrete-wall.png");
+    background-image: url("img/noise.webp"); /* self-hosted, dulu request ke transparenttextures.com */
 }
 
 .close-modal {
